@@ -1,4 +1,6 @@
 Rails.application.routes.draw do
+  get 'user/invites'
+  get '/invites', to: "users#invites"
   devise_for :users
   root to: 'pages#home'
   resources :reservations

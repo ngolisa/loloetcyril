@@ -1,0 +1,23 @@
+<h1>Tous les invités</h1>
+<table class="table">
+  <thead>
+    <tr>
+      <th scope="col">Prénom</th>
+      <th scope="col">Nom</th>
+      <th scope="col">Mail</th>
+      <th scope="col">Téléphone</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @users.each do |user| %>
+    <tr>
+      <th scope="row"><%= user.first_name %></th>
+      <td><%= user.last_name %></td>
+      <td><%= user.email %></td>
+      <td><%= user.phone %></td>
+      <%  %>
+      <td><%=  %></td>
+    </tr>
+    <%end%>
+  </tbody>
+</table>
