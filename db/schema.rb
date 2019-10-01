@@ -10,10 +10,36 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_10_01_170421) do
+ActiveRecord::Schema.define(version: 2019_10_01_173526) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+
+  create_table "groups", force: :cascade do |t|
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.bigint "user1_id"
+    t.bigint "user2_id"
+    t.bigint "user3_id"
+    t.index ["user1_id"], name: "index_groups_on_user1_id"
+    t.index ["user2_id"], name: "index_groups_on_user2_id"
+    t.index ["user3_id"], name: "index_groups_on_user3_id"
+  end
+
+  create_table "reservations", force: :cascade do |t|
+    t.bigint "groups_id"
+    t.string "type_of_the_room"
+    t.boolean "paid", default: true
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["groups_id"], name: "index_reservations_on_groups_id"
+  end
+
+  create_table "rooms", force: :cascade do |t|
+    t.string "type"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
 
   create_table "users", force: :cascade do |t|
     t.string "email", default: "", null: false
@@ -27,4 +53,8 @@ ActiveRecord::Schema.define(version: 2019_10_01_170421) do
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
   end
 
+  add_foreign_key "groups", "users", column: "user1_id", on_delete: :restrict
+  add_foreign_key "groups", "users", column: "user2_id", on_delete: :restrict
+  add_foreign_key "groups", "users", column: "user3_id", on_delete: :restrict
+  add_foreign_key "reservations", "groups", column: "groups_id"
 end
